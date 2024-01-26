@@ -31,7 +31,7 @@
 
 				<div class="collapse navbar-collapse" id="navbarsFurni">
 					<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-						<li class="nav-item active">
+						<li class="nav-item">
 							<a class="nav-link" href="index.html">Home</a>
 						</li>
 						<li><a class="nav-link" href="shop.html">Menu</a></li>
@@ -68,49 +68,12 @@
 		    <div class="container">
 
 		      <div class="row">
-		        <div class="col-md-6 mb-5 mb-md-0">
-		          <h2 class="h3 mb-3 text-black">Billing Details</h2>
-		          <div class="p-3 p-lg-5 border bg-white">
-                  <p>Please, fill in the form below.</p>
-		            <div class="form-group row">
-		              <div class="col-md-6">
-		                <label for="c_fname" class="text-black">First Name <span class="text-danger">*</span></label>
-		                <input type="text" class="form-control" id="c_fname" name="c_fname">
-		              </div>
-		              <div class="col-md-6">
-		                <label for="c_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
-		                <input type="text" class="form-control" id="c_lname" name="c_lname">
-		              </div>
-		            </div>
 
-
-		            <div class="form-group row">
-		              <div class="col-md-12">
-		                <label for="c_address" class="text-black">Address <span class="text-danger">*</span></label>
-		                <input type="text" class="form-control" id="c_address" name="c_address" placeholder="Street address, apartment, unit etc.">
-		              </div>
-		            </div>
-
-		        
-		            <div class="form-group row mb-5">
-		              <div class="col-md-6">
-		                <label for="c_email_address" class="text-black">Email Address <span class="text-danger">*</span></label>
-		                <input type="text" class="form-control" id="c_email_address" name="c_email_address">
-		              </div>
-		              <div class="col-md-6">
-		                <label for="c_phone" class="text-black">Phone <span class="text-danger">*</span></label>
-		                <input type="text" class="form-control" id="c_phone" name="c_phone" placeholder="Phone Number">
-		              </div>
-		            </div>
-
-
-		            <div class="form-group">
-		              <label for="c_order_notes" class="text-black">Order Notes</label>
-		              <textarea name="c_order_notes" id="c_order_notes" cols="30" rows="5" class="form-control" placeholder="Write your notes here..."></textarea>
-		            </div>
-
-		          </div>
+		        <div id="billingDetailsContainer"  class="col-md-6 mb-5 mb-md-0">
+<!-- Dynamic billing -->
 		        </div>
+
+
 		        <div class="col-md-6">
 
 		         
@@ -118,35 +81,34 @@
 		            <div class="col-md-12">
 		              <h2 class="h3 mb-3 text-black">Your Order</h2>
 		              <div class="p-3 p-lg-5 border bg-white">
-		                <table class="table site-block-order-table mb-5">
-		                  <thead>
-		                    <th>Product</th>
-		                    <th>Total</th>
-		                  </thead>
-		                  <tbody>
-		                    <tr>
-		                      <td>Top Up T-Shirt <strong class="mx-2">x</strong> 1</td>
-		                      <td>$250.00</td>
-		                    </tr>
-		                    <tr>
-		                      <td>Polo Shirt <strong class="mx-2">x</strong>   1</td>
-		                      <td>$100.00</td>
-		                    </tr>
-		                    <tr>
-		                      <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
-		                      <td class="text-black">$350.00</td>
-		                    </tr>
-		                    <tr>
-		                      <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
-		                      <td class="text-black font-weight-bold"><strong>$350.00</strong></td>
-		                    </tr>
-		                  </tbody>
-		                </table>
-
-						<div class="form-group">
-							<input type="checkbox" value="1" id="bank"> Cash payment</label></br>
-							<input type="checkbox" value="2" id="cash"> Bank payment</label>
-						  </div>
+		                <table class="table site-block-order-table mb-5" >
+							<thead>
+								<th>Product</th>
+								<th>Total</th>
+							  </thead>
+						<tbody id="checkTable">
+							<!-- Dynamic content -->
+						</tbody>
+						<tr>
+                            <td class="text-black font-weight-bold"><strong>Subtotal</strong></td>
+                            <td class="text-black" id="subtotalCost">$0.00</td>
+                          </tr>
+                          <tr>
+                            <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
+                            <td class="text-black font-weight-bold" id="totalCost"><strong>$0.00</strong></td>
+                          </tr>
+					   </table>
+					   <div class="form-group">
+						<label>
+							<input type="checkbox" value="1" id="bank" name="paymentMethod" onclick="handleCheckboxClick(this)"> Cash payment
+						</label></br>
+						<label>
+							<input type="checkbox" value="2" id="cash" name="paymentMethod" onclick="handleCheckboxClick(this)"> Bank payment
+						</label>
+					</div>
+					
+			
+					
 	  
 	  
 						</br>
@@ -164,7 +126,7 @@
 
 
 		                <div class="form-group">
-		                  <button class="btn btn-black btn-lg py-3 btn-block" onclick="window.location='thankyou.html'">Place Order</button>
+		                  <button class="btn btn-black btn-lg py-3 btn-block" onclick="makePayment()">Place Order</button>
 		                </div>
 
 		              </div>
@@ -178,6 +140,8 @@
 		  </div>
 
 		
+	
+
 		<!-- Start Footer Section -->
 		<footer class="footer-section">
 			<div class="container relative">
@@ -187,12 +151,12 @@
 						<div class="subscription-form">
 							<h3 class="d-flex align-items-center"><span class="me-1"><img src="images/envelope-outline.svg" alt="Image" class="img-fluid"></span><span>Subscribe to Newsletter</span></h3>
 
-							<form action="#" class="row g-3">
+							<form action="php/subscribe.php" method="post" class="row g-3">
 								<div class="col-auto">
-									<input type="text" class="form-control" placeholder="Enter your name">
+									<input type="text" name="name" class="form-control" placeholder="Enter your name">
 								</div>
 								<div class="col-auto">
-									<input type="email" class="form-control" placeholder="Enter your email">
+									<input type="email" name="email" class="form-control" placeholder="Enter your email">
 								</div>
 								<div class="col-auto">
 									<button class="btn btn-primary">
@@ -236,14 +200,14 @@
 
 							<div class="col-6 col-sm-6 col-md-3">
 								<ul class="list-unstyled">
-									<li><a href="contact.html">Support</a></li>
+									<li><a href="mailto:info@rocketchefs.kz">Support</a></li>
 								
 								</ul>
 							</div>
 
 							<div class="col-6 col-sm-6 col-md-3">
 								<ul class="list-unstyled">
-									<li><a href="#">For staff</a></li>
+									<li><a href="staff_login.html">For staff</a></li>
 					
 								</ul>
 							</div>
@@ -280,6 +244,22 @@
 		<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 		<script type="text/javascript" src="js/generateHeader.js"></script>
 		<script type="text/javascript" src="js/exitScript.js"></script>
+		<script type="text/javascript" src="js/checkout.js"></script>
+		<script type="text/javascript" src="js/costManager.js"></script>
+		<script type="text/javascript" src="js/billingDetails.js"></script>
+		<script type="text/javascript" src="js/addCustomer.js"></script>
+		<script type="text/javascript" src="js/addPayment.js"></script>
+		<script>
+			function handleCheckboxClick(clickedCheckbox) {
+				var checkboxes = document.getElementsByName('paymentMethod');
+				
+				for (var i = 0; i < checkboxes.length; i++) {
+					if (checkboxes[i] !== clickedCheckbox) {
+						checkboxes[i].checked = false;
+					}
+				}
+			}
+		</script>
 	</body>
 
 </html>

@@ -90,8 +90,8 @@
 					  <div class="form-group row">
 					  <div class="input-group-append">
 					  <br/>
-						  <input class="btn btn-black btn-sm sign" type="button" id="button-addon1" value="SIGN IN" name="loginbtn" onclick="loginButtonClick()">
-						  <button class="btn btn-black btn-sm sign" id="button-addon2"><a href="customer_register.html" class="text-light text-decoration-none">SIGN UP</a></button>
+						  <input class="btn btn-black btn-sm sign" type="button" id="button-addon777" value="SIGN IN" name="loginbtn" onclick="loginButtonClick()"><br><br>
+						  <button class="btn btn-black btn-sm sign" id="button-addon777"><a href="customer_register.html" class="text-light text-decoration-none">SIGN UP</a></button>
 					  </div>
 					  </div>
 					  <div id="result"></div>
@@ -112,14 +112,38 @@
 		</div>
 		  </div>
 
+		
 		<!-- Start Footer Section -->
 		<footer class="footer-section">
 			<div class="container relative">
 
+				<div class="row">
+					<div class="col-lg-8">
+						<div class="subscription-form">
+							<h3 class="d-flex align-items-center"><span class="me-1"><img src="images/envelope-outline.svg" alt="Image" class="img-fluid"></span><span>Subscribe to Newsletter</span></h3>
+
+							<form action="php/subscribe.php" method="post" class="row g-3">
+								<div class="col-auto">
+									<input type="text" name="name" class="form-control" placeholder="Enter your name">
+								</div>
+								<div class="col-auto">
+									<input type="email" name="email" class="form-control" placeholder="Enter your email">
+								</div>
+								<div class="col-auto">
+									<button class="btn btn-primary">
+										<span class="fa fa-paper-plane"></span>
+									</button>
+								</div>
+							</form>
+
+						</div>
+					</div>
+				</div>
+
 				<div class="row g-5 mb-5">
 					<div class="col-lg-4">
 						<div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">Rocket chefs<span>.</span></a></div>
-						<p class="mb-4">Please, subscribe our social network!</p>
+						<p class="mb-4">Stay connected and be the first to know about exciting updates, promotions, and more – subscribe to our social networks and join the vibrant community of <strong>Rocket chefs</strong> enthusiasts!</p>
 
 						<ul class="list-unstyled custom-social">
 							<li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
@@ -133,28 +157,28 @@
 						<div class="row links-wrap">
 							<div class="col-6 col-sm-6 col-md-3">
 								<ul class="list-unstyled">
-									<li><a href="#">About us</a></li>
+									<li><a href="about.html">About us</a></li>
 									
 								</ul>
 							</div>
 
 							<div class="col-6 col-sm-6 col-md-3">
 								<ul class="list-unstyled">
-									<li><a href="#">Contact us</a></li>
+									<li><a href="contact.html">Contact us</a></li>
 									
 								</ul>
 							</div>
 
 							<div class="col-6 col-sm-6 col-md-3">
 								<ul class="list-unstyled">
-									<li><a href="#">Support</a></li>
+									<li><a href="mailto:info@rocketchefs.kz">Support</a></li>
 								
 								</ul>
 							</div>
 
 							<div class="col-6 col-sm-6 col-md-3">
 								<ul class="list-unstyled">
-									<li><a href="#">For staff</a></li>
+									<li><a href="staff_login.html">For staff</a></li>
 					
 								</ul>
 							</div>
@@ -183,7 +207,6 @@
 			</div>
 		</footer>
 		<!-- End Footer Section -->	
-
 
 		<script src="js/bootstrap.bundle.min.js"></script>
 		<script src="js/tiny-slider.js"></script>

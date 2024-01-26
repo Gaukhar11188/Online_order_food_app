@@ -33,14 +33,6 @@ function ButtonClick(){
     }
 }
 
-// function checkSingIn(){
-//     if(ao.readyState == 4 || ao.readyState == 0){
-//         ao.open("GET", "handler.php", true);
-//         ao.onreadystatechange = getData;                              // GET
-//         ao.send(null);
-//     }
-// }
-
 function getData() {
     if (ao.readyState == 4 && ao.status == 200) {
         resp = ao.responseText;

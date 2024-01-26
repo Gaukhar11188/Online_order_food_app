@@ -1,4 +1,4 @@
-z<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -70,7 +70,7 @@ z<!doctype html>
 		<div class="untree_co-section before-footer-section">
             <div class="container">
               <div class="row mb-5">
-                <form class="col-md-12" method="post">
+<!--                <form class="col-md-12" method="post">-->
                   <div class="site-blocks-table">
                     <table class="table">
                       <thead>
@@ -90,15 +90,13 @@ z<!doctype html>
 
                     </table>
                   </div>
-                </form>
+<!--                </form>-->
               </div>
         
               <div class="row">
                 <div class="col-md-6">
                   <div class="row mb-5">
-                    <div class="col-md-6 mb-3 mb-md-0">
-                      <button class="btn btn-black btn-sm btn-block">Update Cart</button>
-                    </div>
+
                     <div class="col-md-6">
                       <button class="btn btn-outline-black btn-sm btn-block" onclick="window.location='shop.html'">Continue Shopping</button>
                     </div>
@@ -112,7 +110,7 @@ z<!doctype html>
                       <input type="text" class="form-control py-3" id="coupon" placeholder="Coupon Code">
                     </div>
                     <div class="col-md-4">
-                      <button class="btn btn-black">Apply Coupon</button>
+                      <button class="btn btn-black" onclick="enterCoupone()">Apply Coupon</button>
                     </div>
                   </div>
                 </div>
@@ -130,21 +128,29 @@ z<!doctype html>
 								<span class="text-black">Subtotal</span> 
 							  </div> 
 							  <div class="col-md-6 text-right"> 
-								<strong class="text-black">$230.00</strong> 
+								<strong class="text-black" id="subtotalCost">$0.0</strong>
 							  </div> 
-							</div> 
-							<div class="row mb-5"> 
+							</div>
+							  <div class="row mb-3">
+								  <div class="col-md-6">
+									  <span class="text-black" id="code_name"></span>
+								  </div>
+								  <div class="col-md-6 text-right">
+									  <strong class="text-black" id="discount"></strong>
+								  </div>
+							  </div>
+							  <div class="row mb-5">
 							  <div class="col-md-6"> 
 								<span class="text-black">Total</span> 
 							  </div> 
 							  <div class="col-md-6 text-right"> 
-								<strong class="text-black">$230.00</strong> 
+								<strong class="text-black" id="totalCost">$0.0</strong>
 							  </div> 
 							</div> 
 			   
 							<div class="row"> 
 							  <div class="col-md-12"> 
-								<button class="btn btn-black btn-lg py-3 btn-block" onclick="window.location='checkout.html'">Proceed To Checkout</button> 
+								<button class="btn btn-black btn-md py-3 btn-block" href="checkout.html" onclick="placeOrder()">Proceed To Checkout</button> 
 							  </div> 
 							</div> 
 						  </div> 
@@ -161,21 +167,17 @@ z<!doctype html>
 		<footer class="footer-section">
 			<div class="container relative">
 
-				<div class="sofa-img">
-					<img src="images/sofa.png" alt="Image" class="img-fluid">
-				</div>
-
 				<div class="row">
 					<div class="col-lg-8">
 						<div class="subscription-form">
 							<h3 class="d-flex align-items-center"><span class="me-1"><img src="images/envelope-outline.svg" alt="Image" class="img-fluid"></span><span>Subscribe to Newsletter</span></h3>
 
-							<form action="#" class="row g-3">
+							<form action="php/subscribe.php" method="post" class="row g-3">
 								<div class="col-auto">
-									<input type="text" class="form-control" placeholder="Enter your name">
+									<input type="text" name="name" class="form-control" placeholder="Enter your name">
 								</div>
 								<div class="col-auto">
-									<input type="email" class="form-control" placeholder="Enter your email">
+									<input type="email" name="email" class="form-control" placeholder="Enter your email">
 								</div>
 								<div class="col-auto">
 									<button class="btn btn-primary">
@@ -219,14 +221,14 @@ z<!doctype html>
 
 							<div class="col-6 col-sm-6 col-md-3">
 								<ul class="list-unstyled">
-									<li><a href="contact.html">Support</a></li>
+									<li><a href="mailto:info@rocketchefs.kz">Support</a></li>
 								
 								</ul>
 							</div>
 
 							<div class="col-6 col-sm-6 col-md-3">
 								<ul class="list-unstyled">
-									<li><a href="#">For staff</a></li>
+									<li><a href="staff_login.html">For staff</a></li>
 					
 								</ul>
 							</div>
@@ -251,6 +253,7 @@ z<!doctype html>
 
 					</div>
 				</div>
+
 			</div>
 		</footer>
 		<!-- End Footer Section -->	
@@ -259,12 +262,13 @@ z<!doctype html>
 		<script src="js/bootstrap.bundle.min.js"></script>
 		<script src="js/tiny-slider.js"></script>
 		<script src="js/custom.js"></script>
-    
+		<script src="js/cartManager.js"></script>
+    	<script src="js/costManager.js"></script>
 		<script type="text/javascript" src="js/generateHeader.js"></script>
 		<script type="text/javascript" src="js/exitScript.js"></script>
 		<script type="text/javascript" src="js/addToCart.js"></script>
     <script type="text/javascript" src="js/cart.js"></script>
     <script type="text/javascript" src="js/categories.js"></script>
+	<script type="text/javascript" src="js/addOrder.js"></script>
 	</body>
-
 </html>

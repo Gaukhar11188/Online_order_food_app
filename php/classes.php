@@ -21,17 +21,20 @@ class User{
         $pattern = '/^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[A-Z]).{6,}$/';
         $loginPattern = '/^.{3,}$/';
 
-        if($this->password_ != $this->repeat_password){
-            return 'Пароли должны совпадать';
+        if ($this->password_ != $this->repeat_password) {
+            return 'Passwords must match!';
         }
-
+        
+        $pattern = '/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{6,}$/';
         if (!preg_match($pattern, $this->password_)) {
-            return "Пароль Не соответствует требованиям.";
+            return "Password must be at least 6 characters long and contain at least one uppercase letter, one symbol, and one digit.";
         }
-        if(!preg_match($loginPattern, $this->login_)){
-            return "Логин должен быть более 3 символов.";
+        
+        $loginPattern = '/^.{3,}$/';
+        if (!preg_match($loginPattern, $this->login_)) {
+            return "Login must be at least 3 characters long.";
         }
-
+        
         // Проверка на наличие схожего логина в бд
 
         $pdo = connect();
@@ -40,7 +43,7 @@ class User{
         $list->execute();
 
         if ($list->rowCount() > 0) {
-            return "Данный логин уже занят.";
+            return "This login already exists.";
         }
 
         return True;
@@ -51,10 +54,12 @@ class User{
 
         if($checkResult === true){
             try{
+
+                $hashedPassword = password_hash($this->password_, PASSWORD_DEFAULT);
                 $pdo = connect();
 
                 $ps = $pdo->prepare("INSERT INTO users (login_, password_) VALUES (:login, :password)");
-                $ps->execute(['login' => $this->login_, 'password' => $this->password_]);
+                $ps->execute(['login' => $this->login_, 'password' => $hashedPassword]);
 
                 return true;
             }
@@ -87,7 +92,7 @@ class User{
 
             $bd_password = $user['password_'];
 
-            if ($bd_password == $this->password_) {
+            if (password_verify($this->password_, $bd_password)) {
                 return true;
             } else {
                 return false;
@@ -110,6 +115,7 @@ class User{
         $result = $list->fetch(PDO::FETCH_ASSOC);
 
         $this->user_id = $result['max_user_id'];
+        $_SESSION['user_id'] = $this->user_id;
 
         return $this->user_id;
 

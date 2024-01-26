@@ -118,20 +118,21 @@ VALUES
 -- Orders table
 CREATE TABLE IF NOT EXISTS orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
-    customer_id INT,
+    user_id INT,
     order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     total_amount DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+    status VARCHAR(50) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
 
-INSERT INTO orders (customer_id, total_amount)
+INSERT INTO orders (user_id, total_amount, status)
 VALUES 
-    (1, 28.98),
-    (2, 36.98),
-    (3, 18.99),
-    (4, 25.99),
-    (5, 15.99);
+    (1, 28.98, 'Finished'),
+    (2, 36.98, 'Preparing'),
+    (3, 18.99, 'Delivering'),
+    (4, 25.99, 'Declined'),
+    (5, 15.99, 'Finished');
 
 
 -- Order details
@@ -203,6 +204,52 @@ GROUP BY
 ORDER BY 
     total_quantity_sold DESC
 LIMIT 3;
+
+
+SELECT 
+    o.order_id,
+    u.login_ AS user_login,
+    o.order_date
+FROM 
+    orders o
+JOIN 
+    users u ON o.user_id = u.user_id
+WHERE 
+    u.login_ = 'login1'
+ORDER BY 
+    o.order_date DESC
+LIMIT 1;
+
+
+SELECT
+    o.order_id,
+    c.first_name AS customer_name,
+    c.last_name AS customer_last_name,
+    c.email AS customer_email,
+    c.phone_number AS customer_phone_number,
+    o.order_date,
+    o.total_amount,
+    o.status,
+    GROUP_CONCAT(mi.name) AS menu_items_names,
+    GROUP_CONCAT(od.quantity) AS quantities
+FROM
+    orders o
+JOIN
+    customers c ON o.user_id = c.user_id
+JOIN
+    order_details od ON o.order_id = od.order_id
+JOIN
+    menu_items mi ON od.item_id = mi.item_id
+GROUP BY
+    o.order_id,
+    c.first_name,
+    c.last_name,
+    c.email,
+    c.phone_number,
+    o.order_date,
+    o.total_amount,
+    o.status;
+
 
 
 

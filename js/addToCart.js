@@ -1,5 +1,4 @@
 function addToCartButton(productId) {
-    // Check if the user is logged in
     $.ajax({
         url: 'php/isLogin.php',
         method: 'GET',
@@ -7,10 +6,8 @@ function addToCartButton(productId) {
         success: function (data) {
             console.log(data);
             if (data == 1) {
-                // If logged in, add the product to the cart
                 addToCart(productId);
             } else {
-                // If not logged in, redirect to the login page
                 window.location.href = "./customer_login.html";
             }
         },
@@ -38,6 +35,9 @@ function addToCart(productId) {
 }
 
 function updateCartCounter(count) {
-    // Update the cart counter in the navbar
+    if(count === 0){
+        console.log(count)
+        $("#cartTable").append('<tr><td colspan="6">Your cart is empty.</td></tr>');
+    }
     $('#cartCounter').text(count);
 }
