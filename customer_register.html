@@ -98,8 +98,8 @@
 					  <div class="form-group row">
 					  <div class="input-group-append">
 					  </br>
-						  <button class="btn btn-black btn-sm sign"id="button-addon2"><a href="customer_login.html" class="text-light text-decoration-none">SIGN IN</a></button>
-						<input class="btn btn-black btn-sm sign" type="button" id="button-addon2" value="SIGN UP" name="regbtn" onclick="ButtonClick()">
+						  <button class="btn btn-black btn-sm sign"id="button-addon777"><a href="customer_login.html" class="text-light text-decoration-none">SIGN IN</a></button><br><br>
+						<input class="btn btn-black btn-sm sign" type="button" id="button-addon777" value="SIGN UP" name="regbtn" onclick="ButtonClick()">
 					  </div>
 					  </div>
 					  <div id="result"></div>
@@ -121,6 +121,7 @@
 		  </div>
 
 
+		
 		<!-- Start Footer Section -->
 		<footer class="footer-section">
 			<div class="container relative">
@@ -130,12 +131,12 @@
 						<div class="subscription-form">
 							<h3 class="d-flex align-items-center"><span class="me-1"><img src="images/envelope-outline.svg" alt="Image" class="img-fluid"></span><span>Subscribe to Newsletter</span></h3>
 
-							<form action="#" class="row g-3">
+							<form action="php/subscribe.php" method="post" class="row g-3">
 								<div class="col-auto">
-									<input type="text" class="form-control" placeholder="Enter your name">
+									<input type="text" name="name" class="form-control" placeholder="Enter your name">
 								</div>
 								<div class="col-auto">
-									<input type="email" class="form-control" placeholder="Enter your email">
+									<input type="email" name="email" class="form-control" placeholder="Enter your email">
 								</div>
 								<div class="col-auto">
 									<button class="btn btn-primary">
@@ -179,14 +180,14 @@
 
 							<div class="col-6 col-sm-6 col-md-3">
 								<ul class="list-unstyled">
-									<li><a href="contact.html">Support</a></li>
+									<li><a href="mailto:info@rocketchefs.kz">Support</a></li>
 								
 								</ul>
 							</div>
 
 							<div class="col-6 col-sm-6 col-md-3">
 								<ul class="list-unstyled">
-									<li><a href="#">For staff</a></li>
+									<li><a href="staff_login.html">For staff</a></li>
 					
 								</ul>
 							</div>

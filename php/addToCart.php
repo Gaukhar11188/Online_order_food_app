@@ -21,10 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cart_arr = $_SESSION['cart'];
     $alreadyWas = false;
 
-    foreach ($cart_arr as $item){
+    foreach ($cart_arr as &$item){
         if($item['item_id'] == $productDetails['item_id']){
             $item['quantity']++;
             $alreadyWas = true;
+            break;
         }
     } 
 

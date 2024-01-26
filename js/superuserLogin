@@ -1,0 +1,31 @@
+function loginButtonClick() {
+        var slogin = $('#slogin').val();
+        var spassword = $('#spassword').val();
+
+        $.ajax({
+            type: 'POST',
+            url: 'php/login_superuser.php',
+            data: {
+                slogin: slogin,
+                spassword: spassword
+            },
+            success: function (response) {
+                if (response === '1') {
+                    alert('Dear, ' + slogin + ', you have succesfully logged in!');
+                    window.location.href = 'admin.html';
+                    exit();
+                } 
+                else if (response === '3') {
+                    alert('Dear, ' + slogin + ', you have succesfully logged in!');
+                    window.location.href = 'manager.html';
+                    exit();
+                }
+                else {
+                    alert(response);
+                }
+            },
+            error: function () {
+                alert('An error occurred during user authorization.');
+            }
+        });
+    }

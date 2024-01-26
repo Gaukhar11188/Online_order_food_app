@@ -23,6 +23,16 @@ body {
   margin: 0px 0px 0px 190px;
 }
 
+#button-addon777{
+  margin: 0px 0px 0px 110px;
+  width: 50%;
+
+}
+
+#personalinfo{
+  font-size: 19px;
+}
+
 .site-blocks-table.category th {
     padding: 10px;
     text-align: center;
@@ -69,8 +79,13 @@ a {
   justify-content: space-around;
 }
 
+#creditCardSection {
+  display: none; 
+}
+
 .sign{
-  margin: 0px -69px 1px 96px;
+  margin: 0px -69px 1px 95px;
+  width: 55%;
 }
 .custom-navbar {
   background: #236e71 !important;

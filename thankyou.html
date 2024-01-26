@@ -78,32 +78,53 @@
             </svg>
           </span>
           <h2 class="display-3 text-black">Thank you!</h2>
-          <p class="lead mb-5">You order was successfuly completed.</p>
-          <p><a href="shop.html" class="btn btn-sm btn-outline-black">Back to shop</a></p>
+          <p class="lead mb-5" id="orderInfo"></p>
+          <p>
+			<button class="btn btn-black btn-lg py-3 btn-block" onclick="clearCard()">
+				<a href="shop.html" style="text-decoration: none; color: inherit;">Back to shop</a>
+			</button>
+		  </p>
+			<div class="p-3 p-lg-5 border bg-white">
+			<table class="table site-block-order-table mb-5" >
+				<thead>
+				<th>Product</th>
+				<th>Total</th>
+				</thead>
+				<tbody id="checkTable">
+				<!-- Dynamic content -->
+				</tbody>
+				<tr>
+					<td class="text-black font-weight-bold"><strong>Subtotal</strong></td>
+					<td class="text-black" id="subtotalCost">$0.00</td>
+				</tr>
+				<tr>
+					<td class="text-black font-weight-bold"><strong>Order Total</strong></td>
+					<td class="text-black font-weight-bold" id="totalCost"><strong>$0.00</strong></td>
+				</tr>
+			</table>
+			</div>
         </div>
       </div>
     </div>
   </div>
 
+
+
 		<!-- Start Footer Section -->
 		<footer class="footer-section">
 			<div class="container relative">
-
-				<div class="sofa-img">
-					<img src="images/sofa.png" alt="Image" class="img-fluid">
-				</div>
 
 				<div class="row">
 					<div class="col-lg-8">
 						<div class="subscription-form">
 							<h3 class="d-flex align-items-center"><span class="me-1"><img src="images/envelope-outline.svg" alt="Image" class="img-fluid"></span><span>Subscribe to Newsletter</span></h3>
 
-							<form action="#" class="row g-3">
+							<form action="php/subscribe.php" method="post" class="row g-3">
 								<div class="col-auto">
-									<input type="text" class="form-control" placeholder="Enter your name">
+									<input type="text" name="name" class="form-control" placeholder="Enter your name">
 								</div>
 								<div class="col-auto">
-									<input type="email" class="form-control" placeholder="Enter your email">
+									<input type="email" name="email" class="form-control" placeholder="Enter your email">
 								</div>
 								<div class="col-auto">
 									<button class="btn btn-primary">
@@ -147,14 +168,14 @@
 
 							<div class="col-6 col-sm-6 col-md-3">
 								<ul class="list-unstyled">
-									<li><a href="contact.html">Support</a></li>
+									<li><a href="mailto:info@rocketchefs.kz">Support</a></li>
 								
 								</ul>
 							</div>
 
 							<div class="col-6 col-sm-6 col-md-3">
 								<ul class="list-unstyled">
-									<li><a href="#">For staff</a></li>
+									<li><a href="staff_login.html">For staff</a></li>
 					
 								</ul>
 							</div>
@@ -179,6 +200,7 @@
 
 					</div>
 				</div>
+
 			</div>
 		</footer>
 		<!-- End Footer Section -->	
@@ -190,6 +212,14 @@
 		<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 		<script type="text/javascript" src="js/generateHeader.js"></script>
 		<script type="text/javascript" src="js/exitScript.js"></script>
+		<script type="text/javascript" src="js/addToCart.js"></script>
+		<script type="text/javascript" src="js/cartManager.js"></script>
+		<script type="text/javascript" src="js/clearCard.js"></script>
+		<script type="text/javascript" src="js/thankuGenerate.js"></script>
+		<script type="text/javascript" src="js/costManager.js"></script>
+
+
+		<script type="text/javascript" src="js/checkout.js"></script>
 	</body>
 
 </html>

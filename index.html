@@ -17,33 +17,36 @@
 	</head>
 
 	<body>
-		<!-- Start Header/Navigation -->
-		<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+			<!-- Start Header/Navigation -->
+			<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
 
-			<div class="container">
-				<a class="navbar-brand" href="index.html">Rocket chefs<span>.</span></a>
-
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+				<div class="container">
+				  <a class="navbar-brand" href="index.html">Rocket chefs<span>.</span></a>
+			
+				  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
-				</button>
-
-				<div class="collapse navbar-collapse" id="navbarsFurni">
+				  </button>
+			
+				  <div class="collapse navbar-collapse" id="navbarsFurni">
 					<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
-						<li class="nav-item active">
-							<a class="nav-link" href="index.html">Home</a>
-						</li>
-						<li><a class="nav-link" href="shop.html">Menu</a></li>
-						<li><a class="nav-link" href="about.html">About us</a></li>
-						<li><a class="nav-link" href="contact.html">Contact us</a></li>
+					  <li class="nav-item active">
+						<a class="nav-link" href="index.html">Home</a>
+					  </li>
+					  <li class="nav-item">
+						<a class="nav-link" href="shop.html">Menu</a>
+					  </li>
+					  <li><a class="nav-link" href="about.html">About us</a></li>
+					  <li><a class="nav-link" href="contact.html">Contact us</a></li>
 					</ul>
-
+			
 					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5" id="icon_list">
+					  <!-- DYNAMIC NAVIGATION -->
 					</ul>
+				  </div>
 				</div>
-			</div>
-				
-		</nav>
-		<!-- End Header/Navigation -->
+				  
+			  </nav>
+			  <!-- End Header/Navigation -->
 
 		<!-- Start Hero Section -->
 			<div class="hero">
@@ -67,14 +70,8 @@
 		<!-- End Hero Section -->
 
 		<div class="container">
-			<div class="row mb-5">
-				<div class="col-md-12">
-				</br>
-			</br>
-					<div class="border p-4 rounded" role="alert">
-						Returning customer? <a href="customer_login.html">Click here</a> to login
-					</div>
-				</div>
+			<div class="row mb-5" id="isReturning">
+				<!--Dynamic block-->
 			</div>
 	</div>
 
@@ -222,12 +219,12 @@
 						<div class="subscription-form">
 							<h3 class="d-flex align-items-center"><span class="me-1"><img src="images/envelope-outline.svg" alt="Image" class="img-fluid"></span><span>Subscribe to Newsletter</span></h3>
 
-							<form action="#" class="row g-3">
+							<form action="php/subscribe.php" method="post" class="row g-3">
 								<div class="col-auto">
-									<input type="text" class="form-control" placeholder="Enter your name">
+									<input type="text" name="name" class="form-control" placeholder="Enter your name">
 								</div>
 								<div class="col-auto">
-									<input type="email" class="form-control" placeholder="Enter your email">
+									<input type="email" name="email" class="form-control" placeholder="Enter your email">
 								</div>
 								<div class="col-auto">
 									<button class="btn btn-primary">
@@ -271,14 +268,14 @@
 
 							<div class="col-6 col-sm-6 col-md-3">
 								<ul class="list-unstyled">
-									<li><a href="contact.html">Support</a></li>
+									<li><a href="mailto:info@rocketchefs.kz">Support</a></li>
 								
 								</ul>
 							</div>
 
 							<div class="col-6 col-sm-6 col-md-3">
 								<ul class="list-unstyled">
-									<li><a href="#">For staff</a></li>
+									<li><a href="staff_login.html">For staff</a></li>
 					
 								</ul>
 							</div>
@@ -316,6 +313,7 @@
 		<script src="js/main-menu.js"></script>
 		<script type="text/javascript" src="js/generateHeader.js"></script>
 		<script type="text/javascript" src="js/exitScript.js"></script>
+		<script type="text/javascript" src="js/isReturning.js"></script>
 		
 	</body>
 
