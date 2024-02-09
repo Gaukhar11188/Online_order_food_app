@@ -28,8 +28,10 @@ if (isset($_SESSION['login'])) {
                     
 
                     echo '<td class="product-name">';
-                    echo '<h2 class="h5 text-black">'.$row['order_id'].'</h2>';
-                    echo'</td>';
+                    echo '<a href="#" class="h5 text-black order-link" data-order-id="' . $row['order_id'] . '">' . $row['order_id'] . '</a>';
+                    echo '</td>';
+                    
+
 
                     echo '<td class="product-name">';
                     echo '<h2 class="h5 text-black">'.$row['order_date'].'</h2>';

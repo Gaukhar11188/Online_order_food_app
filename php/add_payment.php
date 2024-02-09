@@ -1,4 +1,5 @@
 <?php
+
 include_once("newdb.php");
 session_start();
 
@@ -36,6 +37,7 @@ function loadOrderDetailsToDB(&$pdo)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $totalCost = $_SESSION['totalCost'];
     $userLogin = $_SESSION['login'];
+
     $pdo = connect();
 
     if (empty($totalCost)) {
@@ -54,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($stmtUser->rowCount() > 0) {
                 $userData = $stmtUser->fetch(PDO::FETCH_ASSOC);
                 $userId = $userData['user_id'];
+                $paymentMethod = $_POST['paymentMethod'];
 
                 // Получение последнего order_id по логину
                 $stmtOrder = $pdo->prepare(
@@ -85,18 +88,68 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $existingPaymentData = $stmtExistingPayment->fetch(PDO::FETCH_ASSOC);
                     $paymentCount = $existingPaymentData['paymentCount'];
 
-                    if ($paymentCount == 0) {
+                    if ($paymentCount == 0 && $paymentMethod == 1) {
 
                         $stmtPayment = $pdo->prepare("INSERT INTO payments (order_id, amount, payment_method) VALUES (:orderId, :totalCost, :paymentMethod)");
                         $stmtPayment->bindParam(':orderId', $orderId, PDO::PARAM_INT);
                         $stmtPayment->bindParam(':totalCost', $totalCost, PDO::PARAM_INT);
-                        $stmtPayment->bindParam(':paymentMethod', $_POST['paymentMethod'], PDO::PARAM_STR);
+                        $stmtPayment->bindParam(':paymentMethod', $paymentMethod, PDO::PARAM_STR);
                         $stmtPayment->execute();
 
                         loadOrderDetailsToDB($pdo);
 
                         echo 'success';
-                    } else {
+                    } 
+                    
+                    else if ($paymentCount == 0 && $paymentMethod == 2) {
+                        $stmtBalance = $pdo->prepare("SELECT balance FROM creditcards 
+                            JOIN customers ON customers.customer_id = creditcards.customer_id
+                            WHERE customers.user_id = :userId");
+                        $stmtBalance->bindParam(':userId', $userId, PDO::PARAM_INT);
+                        $stmtBalance->execute();
+                        $balanceData = $stmtBalance->fetch(PDO::FETCH_ASSOC);
+                        $balance = $balanceData['balance'];
+                        $newBalance = $balance - $totalCost;
+
+                        if ($newBalance < 0) {
+                            
+                            echo "Insufficient funds on the credit card.";
+    
+                            exit;
+                        }
+                    
+                        $stmtCustomer = $pdo->prepare("SELECT customers.customer_id
+                            FROM customers JOIN users ON customers.user_id = users.user_id
+                            WHERE users.user_id = :userId");
+                        $stmtCustomer->bindParam(':userId', $userId, PDO::PARAM_INT);
+                        $stmtCustomer->execute();
+                        $customerData = $stmtCustomer->fetch(PDO::FETCH_ASSOC);
+                        $customerId = $customerData['customer_id'];
+                    
+                        $stmtUpdateBalance = $pdo->prepare("UPDATE creditcards SET balance = :newBalance WHERE customer_id = :customerId");
+                        $stmtUpdateBalance->bindParam(':newBalance', $newBalance, PDO::PARAM_INT);
+                        $stmtUpdateBalance->bindParam(':customerId', $customerId, PDO::PARAM_INT);
+                        $stmtUpdateBalance->execute();
+                    
+                        $stmtPayment = $pdo->prepare("INSERT INTO payments (order_id, amount, payment_method) VALUES (:orderId, :totalCost, :paymentMethod)");
+                        $stmtPayment->bindParam(':orderId', $orderId, PDO::PARAM_INT);
+                        $stmtPayment->bindParam(':totalCost', $totalCost, PDO::PARAM_INT);
+                        $stmtPayment->bindParam(':paymentMethod', $paymentMethod, PDO::PARAM_STR);
+                        $stmtPayment->execute();
+                    
+                        loadOrderDetailsToDB($pdo);
+                        
+                        date_default_timezone_set('Your/Timezone');
+                        $purchaseTime = date('Y-m-d H:i:s');
+                    
+                        echo "\nPurchase: Rocket Chefs Restaurant\nCost: $totalCost\nTime: $purchaseTime\nBalance: $newBalance";
+
+                        //echo 'success';
+                         
+                    }
+                    
+                    
+                    else {
                         echo 'Order already exists for this user';
                     }
                 } else {
@@ -112,4 +165,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     echo 'Invalid request method.';
 }
+
 ?>

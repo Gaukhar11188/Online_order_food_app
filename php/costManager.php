@@ -11,10 +11,12 @@ function getDiscountByCoupone($code){
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $discount = intval($data['percent']);
     $code_name = $data['code'];
+    $coupon_id = $data['coupon_id'];
 
     $response = array(
         'discount' => $discount,
         'code_name' => $code_name,
+        'coupon_id' => $coupon_id,
     );
 
     return $response;
@@ -52,10 +54,13 @@ if($functionName == 'getDiscountByCoupone'){
     $response = getDiscountByCoupone($code);
     $_SESSION['discount'] = $response['discount'];
     $_SESSION['code_name'] = $response['code_name'];
+    $_SESSION['coupon_id'] = $response['coupon_id'];
 }
 else if($functionName == 'getLastDiscount' && isset($_SESSION['discount'])){
     $discount = $_SESSION['discount'];
     $code_name = $_SESSION['code_name'];
+    $coupon_id = $_SESSION['coupon_id'];
+   
     $response = array(
         'discount' => $discount,
         'code_name' => $code_name,

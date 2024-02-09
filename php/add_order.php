@@ -2,23 +2,27 @@
 include_once("newdb.php");
 session_start();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') 
-{
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $totalCost = $_POST['totalCost'];
-    $userLogin = $_SESSION['login'];
-    $status = 'Preparing';
 
-    if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
-        echo "Cart Is Empty";
-        exit();
-    }
+    if (isset($_SESSION['login']) && !empty($_SESSION['login'])) {
+        $userLogin = $_SESSION['login'];
+        $status = 'Preparing';
 
-    $pdo = connect();
+        // Подключение к базе данных
+        $pdo = connect();
 
-    if ($pdo) 
-    {
+        // Получение coupon_id
+        $couponId = NULL;
+        if (isset($_SESSION['code_name']) && !empty($_SESSION['code_name'])) {
+            $code_name = $_SESSION['code_name'];
+            $stmtCoupon = $pdo->prepare("SELECT coupon_id FROM coupons WHERE code = :code_name");
+            $stmtCoupon->bindParam(':code_name', $code_name, PDO::PARAM_STR);
+            $stmtCoupon->execute();
+            $couponId =  $stmtCoupon->fetchColumn(); 
+        }
+
         try {
-            // Получение user_id для указанного логина
             $stmtUser = $pdo->prepare("SELECT user_id FROM users WHERE login_ = :userLogin");
             $stmtUser->bindParam(':userLogin', $userLogin, PDO::PARAM_STR);
             $stmtUser->execute();
@@ -26,27 +30,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             if ($stmtUser->rowCount() > 0) {
                 $userData = $stmtUser->fetch(PDO::FETCH_ASSOC);
                 $userId = $userData['user_id'];
-                $_SESSION['userId'] = $userId;
 
+                $stmtOrder = $pdo->prepare("INSERT INTO orders (user_id, total_amount, status, coupon_id) VALUES (:userId, :totalCost, :status, :couponId)");
+                $stmtOrder->bindParam(':userId', $userId, PDO::PARAM_INT);
+                $stmtOrder->bindParam(':totalCost', $totalCost, PDO::PARAM_INT);
+                $stmtOrder->bindParam(':status', $status, PDO::PARAM_STR);
+                $stmtOrder->bindParam(':couponId', $couponId, PDO::PARAM_INT);
+                $stmtOrder->execute();
 
-                    // Вставка данных заказа, если заказа еще нет
-                    $stmtOrder = $pdo->prepare("INSERT INTO orders (user_id, total_amount, status) VALUES (:userId, :totalCost, :status)");
-                    $stmtOrder->bindParam(':userId', $userId, PDO::PARAM_INT);
-                    $stmtOrder->bindParam(':totalCost', $totalCost, PDO::PARAM_INT);
-                    $stmtOrder->bindParam(':status', $status, PDO::PARAM_STR);
-                    $stmtOrder->execute();
-
-                    echo 'success';
-               
+                echo 'success';
             } else {
                 echo 'User not found';
             }
-        } catch (PDOException $e) 
-        {
+        } catch (PDOException $e) {
             echo 'An error occurred during order addition: ' . $e->getMessage();
         }
     } else {
-        echo 'Database connection error.';
+        echo 'User is not logged in.';
     }
 } else {
     echo 'Invalid parameters.';

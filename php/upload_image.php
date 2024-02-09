@@ -1,5 +1,5 @@
 <?php
-$target_dir = "C:/Users/admin/Downloads/OSPanel/domains/localhost/Test/PHPProjectLast/images/";
+$target_dir = "C:/Users/admin/Downloads/OSPanel/domains/localhost/Test/PHPProjectNew/images/";
 
 
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);

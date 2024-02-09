@@ -1,4 +1,4 @@
-function addCustomer() {
+function updateCustomer() {
     var fname = document.getElementById('c_fname').value;
     var lname = document.getElementById('c_lname').value;
     var email = document.getElementById('c_email_address').value;
@@ -7,7 +7,6 @@ function addCustomer() {
 
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     var phoneRegex = /^\+\d{11}$/;
-
 
     if (!emailRegex.test(email)) {
         alert('Enter correct email');
@@ -26,7 +25,7 @@ function addCustomer() {
 
     $.ajax({
         type: 'POST',
-        url: 'php/add_customer.php',
+        url: 'php/update_customer.php',
         data: {     
             fname: fname,
             lname: lname,
@@ -36,13 +35,13 @@ function addCustomer() {
         },
         success: function (response) {
             if (response === 'success') {
-                alert('New customer is added!');
+                alert('Customer data is updated!');
             } else {
                 alert(response);
             }
         },
         error: function () {
-            alert('An error occurred during staff member addition.');
+            alert('An error occurred during customer data update.');
         }
     });
 }
